@@ -1,0 +1,37 @@
+extends base
+
+block content
+    main
+        h2 Create Your Account
+        hr
+
+        form.signup--form
+            label(for='name') Your Name: 
+            input#name(type='name', placeholder='your name', required, autocomplete="off", autofocus)
+            br
+            br
+
+            label(for='email') Email address: 
+            input#email.form__input(type='email', placeholder='you@example.com', required, autocomplete="off")
+            br
+            br
+
+            label(for='calorie_per_day') Calories Per Day: 
+            input#calorie_per_day(type='number', placeholder='calories per day', required, autocomplete="off", autofocus)
+            br
+            br
+
+            label(for='password') Password: 
+            input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            br
+            br
+
+            label(for='passwordConfirm') Confirm Password: 
+            input#passwordConfirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            br
+            br
+
+            button Sign Up
+        
+        p Already Have an account?
+        a(href="/login") Sign In 

@@ -1,0 +1,61 @@
+extends base
+
+block content
+    .display--meals
+        - const username = user.username
+        - const name = username.slice(0, username.length-1).replace(username[0], username[0].toUpperCase())
+
+        h1.message Welcome 
+            span= name
+        hr
+
+        input.user-data(type="hidden", data-username=`${user ? user.username : ''}`)
+        //- Display Date
+        - const today = new Date();
+        - const month = today.getMonth() + 1
+        - const date = today.getDate()
+
+        p.date 
+
+        - const maxValue = `${today.getFullYear()}-${month < 10 ? "0"+month : month}-${date < 10 ? "0"+date : date}`;
+
+        form.fromDate
+            label(for="fromDate") Check Meals From 
+            input#fromDate(type="date", name="fromDate", max=maxValue, value=maxValue)
+            | 
+            button Search
+        
+        table.data
+            thead 
+                tr 
+                    th Meal No
+                    th Time
+                    th Food Name
+                    th Description
+                    th calorie
+            tfoot 
+                tr
+                    form.add-new-meal
+                        //- label(for="foodName") Food Name:
+                        td
+                        td 
+                        td
+                            input#foodName(type="text", name="foodName", placeholder="Food Name", required=true)
+                        
+                        td
+                            //- label(for="description")
+                            input#description(type="text", name="description", placeholder="Description" required=true)
+                        
+                        td    
+                            //- label(for="calorie") Calorie: 
+                            input#calorie(type="number", name="calorie", placeholder="Calorie" required=true)
+                        
+                        td
+                            button Add Meal
+
+        .summary= `Your calorie consume per day is ${user.caloriePerDay} units.`
+
+        button.logout-button Logout 
+    
+    
+    

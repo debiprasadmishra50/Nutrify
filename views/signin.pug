@@ -1,0 +1,23 @@
+extends base
+
+block content
+    main
+        h2 Log into Your Account
+        hr
+
+        form.login--form
+
+            label(for='email') Email address: 
+            input#email.form__input(type='email', placeholder='you@example.com', required, autocomplete="off", autofocus)
+            br
+            br
+
+            label(for='password') Password: 
+            input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+            br
+            br
+
+            button Sign In
+        
+        p Need an account?
+        a(href="/signup")  Sign Up
