@@ -16,13 +16,22 @@ exports.getAll = (Model) =>
             }
             delete req.query.dateFrom; // remove the dateForm property from queryString as we've set the filter manually here
         } else {
+            // console.log(req.requestTime);
             // Query for get meals from today: default
-            const today = new Date();
+            const today = new Date(req.requestTime.split("T")[0]);
+            // const month = today.getMonth();
+
+            // const gte = new Date(req.requestTime.split("T")[0]);
+            // console.log(gte);
+
             // prettier-ignore
             filter = {
                 datetime: {
-                    $gte: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`),
-                    $lt: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`),
+                    $gte: today
+                    // $gte: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`),
+                    // $gte: new Date(Date.UTC(today.getFullYear(), month === 11 ? month : month + 1, today.getDate())),
+                    // $lt: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`),
+                    // $lt: new Date(Date.UTC(today.getFullYear(), month === 11 ? month : month + 1, today.getDate() + 1)),
                 },
             };
         }
