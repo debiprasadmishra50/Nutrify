@@ -17,7 +17,9 @@ exports.deleteMeal = factory.deleteOne(Meal);
 exports.checkCalorieStatus = catchAsync(async (req, res, next) => {
     const user = await User.findOne({ username: req.user.username }); // get current user
 
-    const today = new Date();
+    // const today = new Date();
+    const today = new Date(req.requestTime.split("T")[0]);
+
     const status = await Meal.aggregate([
         {
             $match: {
@@ -26,8 +28,9 @@ exports.checkCalorieStatus = catchAsync(async (req, res, next) => {
                     {
                         // prettier-ignore
                         datetime: {
-                            $gte: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`),
-                            $lt: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`),
+                            $gte: today
+                            // $gte: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`),
+                            // $lt: new Date(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate() + 1}`),
                         },
                     },
                 ],
