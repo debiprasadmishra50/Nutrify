@@ -8799,7 +8799,7 @@ var logout = /*#__PURE__*/function () {
             res = _context3.sent;
 
             if (res.data.status === "success") {
-              location.assign("/");
+              location.assign("/login");
             }
 
             _context3.next = 10;
@@ -9170,12 +9170,15 @@ var addMealForm = document.querySelector(".add-new-meal");
 var fromDateForm = document.querySelector(".fromDate");
 var sorting = document.querySelector("#sort");
 var sortBy = document.querySelector("#by");
-sortBy.addEventListener("change", function (ev) {
-  var username = document.querySelector(".user-data").dataset.username;
-  var fromDate = document.querySelector("#fromDate").value;
-  if (ev.target.value == "+") (0, _displayData.displayMeals)(username, fromDate, "+".concat(sorting.value));
-  if (ev.target.value == "-") (0, _displayData.displayMeals)(username, fromDate, "-".concat(sorting.value));
-});
+
+if (sortBy) {
+  sortBy.addEventListener("change", function (ev) {
+    var username = document.querySelector(".user-data").dataset.username;
+    var fromDate = document.querySelector("#fromDate").value;
+    if (ev.target.value == "+") (0, _displayData.displayMeals)(username, fromDate, "+".concat(sorting.value));
+    if (ev.target.value == "-") (0, _displayData.displayMeals)(username, fromDate, "-".concat(sorting.value));
+  });
+}
 
 var sortFunction = function sortFunction(username) {
   sorting.addEventListener("change", function (e) {

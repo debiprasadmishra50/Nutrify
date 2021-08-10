@@ -12,15 +12,17 @@ const fromDateForm = document.querySelector(".fromDate");
 const sorting = document.querySelector("#sort");
 
 const sortBy = document.querySelector("#by");
-sortBy.addEventListener("change", (ev) => {
-    const username = document.querySelector(".user-data").dataset.username;
-    const fromDate = document.querySelector("#fromDate").value;
+if (sortBy) {
+    sortBy.addEventListener("change", (ev) => {
+        const username = document.querySelector(".user-data").dataset.username;
+        const fromDate = document.querySelector("#fromDate").value;
 
-    if (ev.target.value == "+")
-        displayMeals(username, fromDate, `+${sorting.value}`);
-    if (ev.target.value == "-")
-        displayMeals(username, fromDate, `-${sorting.value}`);
-});
+        if (ev.target.value == "+")
+            displayMeals(username, fromDate, `+${sorting.value}`);
+        if (ev.target.value == "-")
+            displayMeals(username, fromDate, `-${sorting.value}`);
+    });
+}
 
 const sortFunction = (username) => {
     sorting.addEventListener("change", (e) => {
