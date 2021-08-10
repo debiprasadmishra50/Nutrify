@@ -19,22 +19,29 @@ block content
 
         - const maxValue = `${today.getFullYear()}-${month < 10 ? "0"+month : month}-${date < 10 ? "0"+date : date}`;
 
-        form.fromDate
+        form.fromDate(style="display: inline;")
             label(for="fromDate") Check Meals From 
             input#fromDate(type="date", name="fromDate", max=maxValue, value=maxValue)
             | 
-            button Search
-        
-        span Sort By:
+            button(style="padding-bottom: 3px") Search
         | 
-        select#sort(name="sort") 
-            option(value="datetime") date added
-            option(value="calorie") calorie
+            
+        form(action="/", method="get" style="display: inline-block;") 
+            button(style="padding-bottom: 3px") Get Today's Data
         
-        | 
-        select#by(name="by")
-            option(value="+") Asc
-            option(value="-") Desc 
+        br
+
+        .sorting(style="margin: 4px 0px")
+            span Sort By:
+            | 
+            select#sort(name="sort") 
+                option(value="datetime") date added
+                option(value="calorie") calorie
+            
+            | 
+            select#by(name="by")
+                option(value="+") Asc
+                option(value="-") Desc 
 
         table.data
             thead 
@@ -66,7 +73,7 @@ block content
 
         .summary= `Your calorie consume per day is ${user.caloriePerDay} units.`
 
-        button.logout-button Logout 
+        button.logout-button(style="margin-top: 5px") Logout 
     
     
     
