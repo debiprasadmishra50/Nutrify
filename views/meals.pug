@@ -25,6 +25,17 @@ block content
             | 
             button Search
         
+        span Sort By:
+        | 
+        select#sort(name="sort") 
+            option(value="datetime") date added
+            option(value="calorie") calorie
+        
+        | 
+        select#by(name="by")
+            option(value="+") Asc
+            option(value="-") Desc 
+
         table.data
             thead 
                 tr 

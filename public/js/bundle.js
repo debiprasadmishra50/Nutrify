@@ -8491,7 +8491,8 @@ var makeAction = /*#__PURE__*/function () {
             _context.next = 5;
             return (0, _axios.default)({
               method: method,
-              url: "http://127.0.0.1:8000/api/v1/meals/".concat(id),
+              // url: `http://127.0.0.1:8000/api/v1/meals/${id}`,
+              url: "/api/v1/meals/".concat(id),
               data: method === "PATCH" ? data : undefined
             });
 
@@ -8548,6 +8549,7 @@ var activateUpdateAndDelete = function activateUpdateAndDelete() {
 var displayMeals = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(username) {
     var fromDate,
+        sort,
         url,
         res,
         date,
@@ -8566,16 +8568,19 @@ var displayMeals = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             fromDate = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : "";
-            url = "http://127.0.0.1:8000/api/v1/meals?username=".concat(username);
+            sort = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : "";
+            // let url = `http://127.0.0.1:8000/api/v1/meals?username=${username}`;
+            url = "api/v1/meals?username=".concat(username);
             if (fromDate) url += "&dateFrom=".concat(fromDate);
-            _context2.prev = 3;
-            _context2.next = 6;
+            if (sort) url += "&sort=".concat(sort);
+            _context2.prev = 5;
+            _context2.next = 8;
             return (0, _axios.default)({
               method: "GET",
               url: url
             });
 
-          case 6:
+          case 8:
             res = _context2.sent;
             date = document.querySelector(".date");
             data = document.querySelector("thead");
@@ -8585,7 +8590,7 @@ var displayMeals = /*#__PURE__*/function () {
             d = "Meals Data from: ";
 
             if (!(results.length === 0)) {
-              _context2.next = 19;
+              _context2.next = 21;
               break;
             }
 
@@ -8597,14 +8602,15 @@ var displayMeals = /*#__PURE__*/function () {
             date.insertAdjacentHTML("afterend", _html);
             return _context2.abrupt("return");
 
-          case 19:
+          case 21:
             if (document.querySelector("h3")) document.querySelector("h3").remove(); // remove the add meal message is exists
 
-            d += new Date(results[0].datetime).toDateString();
+            d += new Date(results[0].datetime.split("T")[0]).toDateString();
             html = "<tbody>", calorieSum = 0;
             results.map(function (el, index) {
               var date = createDate(new Date(el.datetime));
-              html += "\n                <tr>\n                    <td>".concat(index + 1, "</td>\n                    <td>").concat(date.toLocaleTimeString(), "</td>\n                    <td><input value=\"").concat(el.foodName, "\" /></td>\n                    <td><input value=\"").concat(el.description, "\" /></td>\n                    <td><input value=\"").concat(el.calorie, "\" /></td>\n                    <td class=\"operation\">\n                        <span data-id=").concat(el._id, " class=\"update\">Update</span>/<span data-id=").concat(el._id, " class=\"delete\">Delete</span>\n                    </td>\n                </tr>\n            ");
+              var day = el.datetime.split("T")[0];
+              html += "\n                <tr>\n                    <td>".concat(index + 1, "</td>\n                    <td>").concat(fromDate ? day : "", "  ").concat(date.toLocaleTimeString(), "</td>\n                    <td><input value=\"").concat(el.foodName, "\" /></td>\n                    <td><input value=\"").concat(el.description, "\" /></td>\n                    <td><input value=\"").concat(el.calorie, "\" /></td>\n                    <td class=\"operation\">\n                        <span data-id=").concat(el._id, " class=\"update\">Update</span>/<span data-id=").concat(el._id, " class=\"delete\">Delete</span>\n                    </td>\n                </tr>\n            ");
               calorieSum += el.calorie;
             });
             html += "</tbody>";
@@ -8620,20 +8626,20 @@ var displayMeals = /*#__PURE__*/function () {
 
             summary.insertAdjacentHTML("beforeend", message);
             activateUpdateAndDelete();
-            _context2.next = 37;
+            _context2.next = 39;
             break;
 
-          case 34:
-            _context2.prev = 34;
-            _context2.t0 = _context2["catch"](3);
+          case 36:
+            _context2.prev = 36;
+            _context2.t0 = _context2["catch"](5);
             console.log(_context2.t0);
 
-          case 37:
+          case 39:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[3, 34]]);
+    }, _callee2, null, [[5, 36]]);
   }));
 
   return function displayMeals(_x3) {
@@ -8684,7 +8690,8 @@ var signup = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: "POST",
-              url: "http://127.0.0.1:8000/api/v1/users/signup",
+              // url: "http://127.0.0.1:8000/api/v1/users/signup",
+              url: "/api/v1/users/signup",
               data: {
                 name: name,
                 email: email,
@@ -8735,7 +8742,8 @@ var login = /*#__PURE__*/function () {
             _context2.next = 3;
             return (0, _axios.default)({
               method: "POST",
-              url: "http://127.0.0.1:8000/api/v1/users/signin",
+              // url: "http://127.0.0.1:8000/api/v1/users/signin",
+              url: "/api/v1/users/signin",
               data: {
                 email: email,
                 password: password
@@ -8783,8 +8791,8 @@ var logout = /*#__PURE__*/function () {
             _context3.next = 3;
             return (0, _axios.default)({
               method: "GET",
-              url: "http://127.0.0.1:8000/api/v1/users/logout" // url: "/api/v1/users/logout",
-
+              // url: "http://127.0.0.1:8000/api/v1/users/logout",
+              url: "/api/v1/users/logout"
             });
 
           case 3:
@@ -8843,7 +8851,8 @@ var addMeal = /*#__PURE__*/function () {
             _context.next = 3;
             return (0, _axios.default)({
               method: "POST",
-              url: "http://127.0.0.1:8000/api/v1/meals",
+              // url: "http://127.0.0.1:8000/api/v1/meals",
+              url: "/api/v1/meals",
               data: {
                 foodName: foodName,
                 calorie: calorie,
@@ -9159,6 +9168,27 @@ var loginForm = document.querySelector(".login--form");
 var logoutBtn = document.querySelector(".logout-button");
 var addMealForm = document.querySelector(".add-new-meal");
 var fromDateForm = document.querySelector(".fromDate");
+var sorting = document.querySelector("#sort");
+var sortBy = document.querySelector("#by");
+sortBy.addEventListener("change", function (ev) {
+  var username = document.querySelector(".user-data").dataset.username;
+  var fromDate = document.querySelector("#fromDate").value;
+  if (ev.target.value == "+") (0, _displayData.displayMeals)(username, fromDate, "+".concat(sorting.value));
+  if (ev.target.value == "-") (0, _displayData.displayMeals)(username, fromDate, "-".concat(sorting.value));
+});
+
+var sortFunction = function sortFunction(username) {
+  sorting.addEventListener("change", function (e) {
+    var fromDate = document.querySelector("#fromDate").value;
+    var value = e.target.value;
+    var sortBy = document.querySelector("#by");
+    sortBy.addEventListener("change", function (ev) {
+      if (ev.target.value == "+") (0, _displayData.displayMeals)(username, fromDate, "+".concat(value));
+      if (ev.target.value == "-") (0, _displayData.displayMeals)(username, fromDate, "-".concat(value));
+    });
+    (0, _displayData.displayMeals)(username, fromDate, "".concat(sortBy.value).concat(e.target.value));
+  });
+};
 
 if (meals) {
   var username = document.querySelector(".user-data").dataset.username;
@@ -9169,6 +9199,10 @@ if (meals) {
       e.preventDefault();
       if (fromDate.value) (0, _displayData.displayMeals)(username, fromDate.value); // return;
     });
+
+    if (sorting) {
+      sortFunction(username);
+    }
   }
 
   (0, _displayData.displayMeals)(username);

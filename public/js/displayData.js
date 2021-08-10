@@ -41,11 +41,12 @@ const activateUpdateAndDelete = () => {
     }
 };
 
-export const displayMeals = async (username, fromDate = "") => {
+export const displayMeals = async (username, fromDate = "", sort = "") => {
     // let url = `http://127.0.0.1:8000/api/v1/meals?username=${username}`;
     let url = `api/v1/meals?username=${username}`;
 
     if (fromDate) url += `&dateFrom=${fromDate}`;
+    if (sort) url += `&sort=${sort}`;
 
     try {
         const res = await axios({
@@ -77,17 +78,20 @@ export const displayMeals = async (username, fromDate = "") => {
 
         if (document.querySelector("h3")) document.querySelector("h3").remove(); // remove the add meal message is exists
 
-        d += new Date(results[0].datetime).toDateString();
+        d += new Date(results[0].datetime.split("T")[0]).toDateString();
 
         let html = "<tbody>",
             calorieSum = 0;
         results.map((el, index) => {
             const date = createDate(new Date(el.datetime));
+            const day = el.datetime.split("T")[0];
 
             html += `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${date.toLocaleTimeString()}</td>
+                    <td>${
+                        fromDate ? day : ""
+                    }  ${date.toLocaleTimeString()}</td>
                     <td><input value="${el.foodName}" /></td>
                     <td><input value="${el.description}" /></td>
                     <td><input value="${el.calorie}" /></td>

@@ -9,6 +9,35 @@ const loginForm = document.querySelector(".login--form");
 const logoutBtn = document.querySelector(".logout-button");
 const addMealForm = document.querySelector(".add-new-meal");
 const fromDateForm = document.querySelector(".fromDate");
+const sorting = document.querySelector("#sort");
+
+const sortBy = document.querySelector("#by");
+sortBy.addEventListener("change", (ev) => {
+    const username = document.querySelector(".user-data").dataset.username;
+    const fromDate = document.querySelector("#fromDate").value;
+
+    if (ev.target.value == "+")
+        displayMeals(username, fromDate, `+${sorting.value}`);
+    if (ev.target.value == "-")
+        displayMeals(username, fromDate, `-${sorting.value}`);
+});
+
+const sortFunction = (username) => {
+    sorting.addEventListener("change", (e) => {
+        const fromDate = document.querySelector("#fromDate").value;
+        let value = e.target.value;
+
+        const sortBy = document.querySelector("#by");
+        sortBy.addEventListener("change", (ev) => {
+            if (ev.target.value == "+")
+                displayMeals(username, fromDate, `+${value}`);
+            if (ev.target.value == "-")
+                displayMeals(username, fromDate, `-${value}`);
+        });
+
+        displayMeals(username, fromDate, `${sortBy.value}${e.target.value}`);
+    });
+};
 
 if (meals) {
     const username = document.querySelector(".user-data").dataset.username;
@@ -22,6 +51,10 @@ if (meals) {
             if (fromDate.value) displayMeals(username, fromDate.value);
             // return;
         });
+
+        if (sorting) {
+            sortFunction(username);
+        }
     }
 
     displayMeals(username);
